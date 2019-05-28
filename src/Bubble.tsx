@@ -15,7 +15,6 @@ import QuickReplies from './QuickReplies'
 
 import MessageText from './MessageText'
 import MessageImage from './MessageImage'
-import MessageVideo from './MessageVideo'
 
 import Time from './Time'
 import Color from './Color'
@@ -116,7 +115,6 @@ interface BubbleProps<TMessage extends IMessage = IMessage> {
   onLongPress?(context?: any, message?: any): void
   onQuickReply?(replies: Reply[]): void
   renderMessageImage?(messageImageProps: MessageImage['props']): React.ReactNode
-  renderMessageVideo?(messageVideoProps: MessageVideo['props']): React.ReactNode
   renderMessageText?(messageTextProps: MessageText['props']): React.ReactNode
   renderCustomView?(bubbleProps: BubbleProps): React.ReactNode
   renderTime?(timeProps: Time['props']): React.ReactNode
@@ -137,7 +135,6 @@ export default class Bubble extends React.Component<BubbleProps> {
     touchableProps: {},
     onLongPress: null,
     renderMessageImage: null,
-    renderMessageVideo: null,
     renderMessageText: null,
     renderCustomView: null,
     renderUsername: null,
@@ -168,7 +165,6 @@ export default class Bubble extends React.Component<BubbleProps> {
     touchableProps: PropTypes.object,
     onLongPress: PropTypes.func,
     renderMessageImage: PropTypes.func,
-    renderMessageVideo: PropTypes.func,
     renderMessageText: PropTypes.func,
     renderCustomView: PropTypes.func,
     renderUsernameOnMessage: PropTypes.bool,
@@ -313,17 +309,6 @@ export default class Bubble extends React.Component<BubbleProps> {
     return null
   }
 
-  renderMessageVideo() {
-    if (this.props.currentMessage && this.props.currentMessage.video) {
-      const { containerStyle, wrapperStyle, ...messageVideoProps } = this.props
-      if (this.props.renderMessageVideo) {
-        return this.props.renderMessageVideo(messageVideoProps)
-      }
-      return <MessageVideo {...messageVideoProps} />
-    }
-    return null
-  }
-
   renderTicks() {
     const { currentMessage, renderTicks, user } = this.props
     if (renderTicks && currentMessage) {
@@ -427,7 +412,6 @@ export default class Bubble extends React.Component<BubbleProps> {
             <View>
               {this.renderCustomView()}
               {this.renderMessageImage()}
-              {this.renderMessageVideo()}
               {this.renderMessageText()}
               <View
                 style={[

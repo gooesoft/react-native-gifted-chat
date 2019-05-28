@@ -29,7 +29,6 @@ export interface IMessage {
   createdAt: Date | number
   user: User
   image?: string
-  video?: string
   audio?: string
   system?: boolean
   sent?: boolean
